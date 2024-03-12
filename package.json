@@ -13,6 +13,17 @@
     "node": "18.16.0",
     "npm": "9.5.1"
   },
+  "keywords": [
+    "Angular Ecommerce Components",
+    "Angular Ecommerce library",
+    "Ecommerce",
+    "Angular components",
+    "Angular ui components",
+    "ngx-common-ui",
+    "TypeScript",
+    "javascript",
+    "javascript framework"
+  ],
   "peerDependencies": {
     "@angular/common": "^16.1.0",
     "@angular/core": "^16.1.0"
