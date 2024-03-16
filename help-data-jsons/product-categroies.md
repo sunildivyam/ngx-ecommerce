@@ -1,0 +1,33 @@
+- # PRODUCT CATEGORIES
+
+- Men
+  - Topwear
+  - Bottomwear
+  - Footwear
+  - - Sports & Active Wear
+  - Fashion Accessories
+- Women
+  - Indian & Fusion Wear
+  - Western Wear
+  - Maternity
+  - - Lingerie & Sleepwear
+  - Gadgets
+- Kids
+  - Boys Clothing
+  - Girls Clothing
+  - Footwear
+  - - Infants
+  - Kids Accessories
+- Home & Living
+  - Bed Linen & Furnishing
+  - Bath
+  - Home Décor
+  - - Home Gift Sets
+  - Brands
+- Beauty
+  - Makeup
+  - Skincare
+  - Bath & Body
+  - Haircare
+  - Appliances
+  - Top Brands

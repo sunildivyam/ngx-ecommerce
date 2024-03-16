@@ -1,0 +1,61 @@
+<form [formGroup]="deliveryInstructionForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="id">ID:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="id"
+      formControlName="id"
+      readonly
+    />
+  </div>
+
+  <div class="form-group">
+    <div *ngFor="let wDay of WeekDaysEnum | enumToArray">
+      <label for="offDays">Off Days:</label>
+      <div class="form-check-group">
+        <label class="form-check-label">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="offDays"
+            value="Monday"
+          />
+          Monday
+        </label>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        deliveryInstructionForm.get('offDays')?.invalid &&
+        (deliveryInstructionForm.get('offDays')?.dirty ||
+          deliveryInstructionForm.get('offDays')?.touched)
+      "
+    >
+      <div *ngIf="deliveryInstructionForm.get('offDays')?.hasError('required')">
+        Please select at least one off day.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="instructionText">Instruction Text:</label>
+    <textarea
+      class="form-control"
+      id="instructionText"
+      rows="3"
+      formControlName="instructionText"
+    ></textarea>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="deliveryInstructionForm.invalid"
+  >
+    Save
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="cancel()">
+    Cancel
+  </button>
+</form>
