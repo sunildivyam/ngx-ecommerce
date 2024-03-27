@@ -1,7 +1,7 @@
 import { AddressTypesEnum } from '../enums/address-types.enums';
 import { DeliveryInstruction } from './deliveryInstruction.interface';
 
-export interface CustomerAddress {
+export interface Address {
   id?: string; // Auto generated Unique Id
   customerId: number; // Unique Id of Customer
   addressType: AddressTypesEnum;
