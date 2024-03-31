@@ -38,7 +38,7 @@ export class AddressListComponent {
    * Shows the the address in plain list view.
    * Also emits selected event.
    */
-  @Input() enableSelect: boolean = true;
+  @Input() enableSelect: boolean = false;
 
   /**
    * enables deleting of individual addresses
