@@ -1,6 +1,8 @@
 <form class="form-group container" [formGroup]="fm">
   <!-- Readonly Address -->
-  <div *ngIf="instructionsOnly" class="row">Read only Address Component</div>
+  <div *ngIf="instructionsOnly" class="row">
+    <anu-address [value]="value"></anu-address>
+  </div>
 
   <ng-container *ngIf="!instructionsOnly">
     <div class="row">

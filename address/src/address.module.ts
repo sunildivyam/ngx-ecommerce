@@ -11,9 +11,17 @@ import { PincodeValidatorService } from './services/pincode-validator.service';
 import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
 import { SingleSelectBoxModule } from '@annuadvent/ngx-common-ui/single-select-box';
 import { CollapsibleModule } from '@annuadvent/ngx-common-ui/collapsible';
+import { AddressComponent } from './components/address/address.component';
+import { AddressListComponent } from './components/address-list/address-list.component';
+import { CardModule } from '@annuadvent/ngx-common-ui/card';
 
 @NgModule({
-  declarations: [DeliveryInstructionFormComponent, AddressFormComponent],
+  declarations: [
+    DeliveryInstructionFormComponent,
+    AddressFormComponent,
+    AddressComponent,
+    AddressListComponent,
+  ],
   providers: [AddressFormService, PincodeValidatorService],
   imports: [
     CommonModule,
@@ -24,7 +32,13 @@ import { CollapsibleModule } from '@annuadvent/ngx-common-ui/collapsible';
     SpinnerModule,
     SingleSelectBoxModule,
     CollapsibleModule,
+    CardModule,
   ],
-  exports: [DeliveryInstructionFormComponent, AddressFormComponent],
+  exports: [
+    DeliveryInstructionFormComponent,
+    AddressFormComponent,
+    AddressComponent,
+    AddressListComponent,
+  ],
 })
 export class AddressModule {}

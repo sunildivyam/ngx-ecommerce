@@ -1,0 +1,129 @@
+<!-- Card List view -->
+
+<ng-container *ngIf="!enableSelect">
+  <div
+    *ngIf="enableAdd"
+    class="center relative border border-thickest add-card"
+    [ngClass]="cardClassNames"
+  >
+    <a
+      class="primary container add-link accent-light middle"
+      href="#"
+      (click)="onAddClicked($event)"
+    >
+      <div class="col-12 center">
+        <span class="add-link-plus">+</span>
+        <span class="add-link-text">Add address</span>
+      </div>
+    </a>
+  </div>
+
+  <anu-card [ngClass]="cardClassNames" *ngFor="let address of value">
+    <anu-card-title class="border-bottom border-primary">
+      <!-- Default Address -->
+      <div class="row stretch">
+        <small
+          *ngIf="defaultAddress?.id == address.id"
+          class="border spacing-around-half border-round spacing-h-half"
+        >
+          Default
+        </small>
+
+        <!-- Set Default Address -->
+        <a
+          *ngIf="defaultAddress?.id !== address.id"
+          class="primary-deep-dark spacing-h-half"
+          href="#"
+          (click)="onDefaultClicked($event, address)"
+          >Set as Default</a
+        >
+
+        <!-- Address Type -->
+        <small class="border spacing-around-half border-round spacing-h-half">{{
+          address.addressType
+        }}</small>
+      </div>
+    </anu-card-title>
+
+    <anu-card-body class="spacing-h">
+      <anu-address [value]="address"></anu-address>
+
+      <!-- Add delivery Instructions Link -->
+      <div class="row spacing-around-v">
+        <a
+          class="primary-darkest"
+          href="#"
+          (click)="onAddDeliveryInstructionsClicked($event, address)"
+          >Add delivery instructions</a
+        >
+      </div>
+    </anu-card-body>
+    <anu-card-footer class="border-bottom border-primary">
+      <div *ngIf="enableEdit || enableDelete" class="row center">
+        <a
+          *ngIf="enableEdit"
+          class="btn primary"
+          href="#"
+          (click)="onEditClicked($event, address)"
+          >Edit</a
+        >
+        <a
+          *ngIf="enableDelete"
+          class="btn primary"
+          href="#"
+          (click)="onDeleteClicked($event, address)"
+          >Remove</a
+        >
+      </div>
+    </anu-card-footer>
+  </anu-card>
+</ng-container>
+
+<!-- Plain LIST View -->
+
+<ng-container *ngIf="enableSelect">
+  <label
+    [for]="address?.id"
+    class="spacing-half"
+    [ngClass]="{
+      'secondary-lightest-grad-h': selectedAddress?.id === address.id
+    }"
+    *ngFor="let address of value"
+  >
+    <input
+      [id]="address?.id"
+      type="checkbox"
+      [checked]="selectedAddress?.id === address.id"
+      [value]="address.id"
+      (change)="onSelected($event, address)"
+    />
+    <anu-address
+      class=""
+      [value]="address"
+      [isSingleLiner]="true"
+    ></anu-address>
+    <span *ngIf="enableEdit" class="spacing-around-h">|</span>
+    <a
+      *ngIf="enableEdit"
+      class="primary-darkest"
+      href="#"
+      (click)="onEditClicked($event, address)"
+      >Edit</a
+    >
+    <span class="spacing-around-h">|</span>
+    <a
+      class="primary-darkest"
+      href="#"
+      (click)="onAddDeliveryInstructionsClicked($event, address)"
+      >Add delivery instructions</a
+    >
+  </label>
+  <a
+    *ngIf="enableAdd"
+    class="primary-darkest row"
+    href="#"
+    (click)="onAddClicked($event)"
+  >
+    <strong>+ Add a new address</strong>
+  </a>
+</ng-container>

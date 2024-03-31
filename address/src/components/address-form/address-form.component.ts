@@ -109,7 +109,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
   ) {
     this.initForm();
     this.fm.valueChanges.subscribe((value) => {
-      const address: Address = { ...this.value, ...value };
+      const address: Address = { ...this.value, ...this.fm.getRawValue() };
       this.changed.emit(address);
     });
   }
@@ -302,7 +302,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
 
     if (this.fm.valid) {
       // Emit Submit
-      const address: Address = { ...this.value, ...this.fm.value };
+      const address: Address = { ...this.value, ...this.fm.getRawValue() };
       this.submitClicked.emit(address);
     } else {
       // Focus to the first errored field

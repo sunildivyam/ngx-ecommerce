@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .add-card {
+    border-style: dashed;
+    min-height: 13rem;
+  }
+
+  .add-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 2rem;
+
+    &-plus {
+      font-size: 7rem;
+      margin-top: -4rem;
+    }
+
+    &-text {
+      font-size: 2rem;
+      margin-top: -4rem;
+    }
+  }
+}

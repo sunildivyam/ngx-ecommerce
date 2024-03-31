@@ -1,0 +1,27 @@
+<ng-container *ngIf="!isSingleLiner">
+  <label *ngIf="value?.firstName"
+    >{{ value?.firstName }} {{ value?.lastName }}</label
+  >
+  <p *ngIf="value?.addressLine1">{{ value?.addressLine1 }}</p>
+  <p *ngIf="value?.addressLine2">{{ value?.addressLine2 }}</p>
+  <p *ngIf="value?.landmark">{{ value?.landmark }}</p>
+  <p *ngIf="value?.city">
+    {{ value?.city }}, {{ value?.state }} - {{ value?.pincode }}
+  </p>
+  <p *ngIf="value?.countryCode">{{ countriesEnum[value?.countryCode] }}</p>
+</ng-container>
+
+<ng-container *ngIf="isSingleLiner">
+  <span *ngIf="value?.firstName"
+    >{{ value?.firstName }} {{ value?.lastName }}</span
+  >
+  <span *ngIf="value?.addressLine1">{{ value?.addressLine1 }},</span>
+  <span *ngIf="value?.addressLine2">{{ value?.addressLine2 }},</span>
+  <span *ngIf="value?.landmark">{{ value?.landmark }},</span>
+  <span *ngIf="value?.city">
+    {{ value?.city }}, {{ value?.state }} - {{ value?.pincode }}
+  </span>
+  <span *ngIf="value?.countryCode"
+    >, {{ countriesEnum[value?.countryCode] }}</span
+  >
+</ng-container>
