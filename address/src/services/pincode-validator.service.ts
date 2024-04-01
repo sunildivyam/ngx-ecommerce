@@ -3,21 +3,26 @@ import { Injectable } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidator,
-  ValidationErrors,
+  ValidationErrors
 } from '@angular/forms';
 import { Pincode } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PincodeValidatorService implements AsyncValidator {
+  private $pincodeUrl = '';
   constructor(private http: HttpClient) {}
+
+  public set pincodeUrl(v: string) {
+    this.$pincodeUrl = v;
+  }
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     const id = control.value;
 
-    return this.http.get(`/api/addresses/pincode/${id}`).pipe(
+    return this.http.get(`${this.pincodeUrl}/${id}`).pipe(
       map((pincode) => {
         const city = control.parent.get('city');
         const state = control.parent.get('state');
@@ -28,8 +33,8 @@ export class PincodeValidatorService implements AsyncValidator {
       catchError((error) => {
         const formError: ValidationErrors = {
           pincode: {
-            message: 'Pincode does not exist',
-          },
+            message: 'Pincode does not exist'
+          }
         };
 
         return of(formError);

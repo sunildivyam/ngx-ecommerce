@@ -70,6 +70,12 @@ export class AddressFormComponent implements OnInit, OnChanges {
   @Input() cancelBtnLabel: string = 'Cancel';
 
   /**
+   * Url to validate pincode and fetch City and its state.
+   * Usually an API url.
+   */
+  @Input() pincodeUrl: string = '';
+
+  /**
    * Emit address value from form, when blur happens from any of the form fields.
    */
   @Output() changed = new EventEmitter<Address>();
@@ -108,6 +114,8 @@ export class AddressFormComponent implements OnInit, OnChanges {
     private enumToArrayPipe: EnumToArrayPipe,
     private pincodeValidatorService: PincodeValidatorService
   ) {
+    this.pincodeValidatorService.pincodeUrl = this.pincodeUrl;
+
     this.pincodeAsyncValidator = this.pincodeValidatorService.validate.bind(
       this.pincodeValidatorService
     );
@@ -120,10 +128,17 @@ export class AddressFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.pincodeValidatorService.pincodeUrl = this.pincodeUrl;
     this.initForm(this.value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // change in pincodeUrl should update pincodeValidator to use new api url for validation
+    if (changes && changes.pincodeUrl) {
+      this.pincodeValidatorService.pincodeUrl = this.pincodeUrl;
+    }
+
+    // change in value should init form
     changes && changes.value && this.initForm(this.value);
   }
 
