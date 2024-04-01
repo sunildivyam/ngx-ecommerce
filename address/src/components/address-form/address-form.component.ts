@@ -6,32 +6,32 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   ValidationErrors,
-  Validators,
+  Validators
 } from '@angular/forms';
 import {
   ADDRESS_FIELD_LENGTH,
   Address,
   AddressTypesEnum,
   CountriesEnum,
-  DeliveryInstruction,
+  DeliveryInstruction
 } from '@annuadvent/ngx-core/helpers-ecommerce';
 import {
   IndianStatesEnum,
-  WeekDaysEnum,
+  WeekDaysEnum
 } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { PincodeValidatorService } from '../../services/pincode-validator.service';
 import { SpinnerMode } from '@annuadvent/ngx-common-ui/spinner';
 import {
   companyValidator,
   mobilePhoneValidator,
-  trimSpacesValidator,
+  trimSpacesValidator
 } from '../../constants/address.validators';
 import { EnumToArrayPipe } from '@annuadvent/ngx-core/utils';
 
@@ -41,7 +41,7 @@ import { EnumToArrayPipe } from '@annuadvent/ngx-core/utils';
 @Component({
   selector: 'anu-address-form',
   templateUrl: './address-form.component.html',
-  styleUrls: ['./address-form.component.scss'],
+  styleUrls: ['./address-form.component.scss']
 })
 export class AddressFormComponent implements OnInit, OnChanges {
   /**
@@ -100,6 +100,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
   addressTypesEnum = AddressTypesEnum;
   addressTypeItems = [];
   addressTypeSelected = null;
+  pincodeAsyncValidator = null;
 
   constructor(
     private fb: FormBuilder,
@@ -107,6 +108,10 @@ export class AddressFormComponent implements OnInit, OnChanges {
     private enumToArrayPipe: EnumToArrayPipe,
     private pincodeValidatorService: PincodeValidatorService
   ) {
+    this.pincodeAsyncValidator = this.pincodeValidatorService.validate.bind(
+      this.pincodeValidatorService
+    );
+
     this.initForm();
     this.fm.valueChanges.subscribe((value) => {
       const address: Address = { ...this.value, ...this.fm.getRawValue() };
@@ -119,7 +124,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.initForm(this.value);
+    changes && changes.value && this.initForm(this.value);
   }
 
   // Getters
@@ -169,69 +174,78 @@ export class AddressFormComponent implements OnInit, OnChanges {
       .transform(AddressTypesEnum)
       .map((it) => ({
         key: it,
-        value: it,
+        value: it
       }));
     // Set addressType selected Item
     this.addressTypeSelected = {
       key: this.addressType.value,
-      value: this.addressType.value,
+      value: this.addressType.value
     };
   }
 
   private initForm(value: Address = null): void {
     value = value || new Address();
     if (this.fm) {
+      // Remove and re-add async validator to skip validation on setValue
+      this.pincode.removeAsyncValidators([this.pincodeAsyncValidator]);
       this.fm.patchValue(value, { emitEvent: false });
+      setTimeout(() =>
+        this.pincode.addAsyncValidators([this.pincodeAsyncValidator])
+      );
       return;
     }
 
     this.fm = this.fb.group(
       {
+        id: [value.id, []],
+        uid: [value.uid, []],
+        createTime: [value.createTime, []],
+        updateTime: [value.updateTime, []],
         addressType: [
           value.addressType,
-          [trimSpacesValidator, Validators.required],
+          [trimSpacesValidator, Validators.required]
         ],
         firstName: [
           value.firstName,
           [
             Validators.required,
             Validators.maxLength(ADDRESS_FIELD_LENGTH),
-            trimSpacesValidator,
-          ],
+            trimSpacesValidator
+          ]
         ],
         lastName: [
           value.lastName,
-          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)],
+          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)]
         ],
         company: [
           value.company,
-          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)],
+          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)]
         ],
         addressLine1: [
           value.addressLine1,
           [
             Validators.required,
             Validators.maxLength(ADDRESS_FIELD_LENGTH),
-            trimSpacesValidator,
-          ],
+            trimSpacesValidator
+          ]
         ],
         addressLine2: [
           value.addressLine2,
-          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)],
+          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)]
         ],
         landmark: [
           value.landmark,
-          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)],
+          [trimSpacesValidator, Validators.maxLength(ADDRESS_FIELD_LENGTH)]
         ],
         city: [
           { value: value.city, disabled: true },
           [Validators.required],
-          [],
+          []
         ],
         state: [
           { value: value.state, disabled: true },
           [Validators.required],
-          [],
+          []
         ],
         pincode: [
           value.pincode,
@@ -239,31 +253,27 @@ export class AddressFormComponent implements OnInit, OnChanges {
             trimSpacesValidator,
             Validators.required,
             Validators.minLength(6),
-            Validators.maxLength(6),
+            Validators.maxLength(6)
           ],
-          [
-            this.pincodeValidatorService.validate.bind(
-              this.pincodeValidatorService
-            ),
-          ],
+          [this.pincodeAsyncValidator],
           {
-            updateOn: 'blur',
-          },
+            updateOn: 'blur'
+          }
         ],
         countryCode: [
           { value: value.countryCode, disabled: true },
           [Validators.required],
-          [],
+          []
         ],
         phoneNumber: [
           value.phoneNumber,
-          [trimSpacesValidator, Validators.required, mobilePhoneValidator],
+          [trimSpacesValidator, Validators.required, mobilePhoneValidator]
         ],
-        deliveryInstruction: [value.deliveryInstruction, [Validators.required]],
+        deliveryInstruction: [value.deliveryInstruction, [Validators.required]]
       },
       {
         validators: [companyValidator],
-        updateOn: 'blur',
+        updateOn: 'blur'
       }
     );
 
@@ -291,7 +301,7 @@ export class AddressFormComponent implements OnInit, OnChanges {
 
     this.deliveryInstruction.patchValue({
       ...this.deliveryInstruction.value,
-      offDays,
+      offDays
     });
   }
 
