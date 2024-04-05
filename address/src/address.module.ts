@@ -7,20 +7,20 @@ import { AddressFormComponent } from './components/address-form/address-form.com
 import { HttpClientModule } from '@angular/common/http';
 import { AddressFormService } from './services/address-form.service';
 import { ReactiveFormModule } from '@annuadvent/ngx-common-ui/reactive-form';
-import { PincodeValidatorService } from './services/pincode-validator.service';
 import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
 import { SingleSelectBoxModule } from '@annuadvent/ngx-common-ui/single-select-box';
 import { CollapsibleModule } from '@annuadvent/ngx-common-ui/collapsible';
 import { AddressComponent } from './components/address/address.component';
 import { AddressListComponent } from './components/address-list/address-list.component';
 import { CardModule } from '@annuadvent/ngx-common-ui/card';
+import { PincodeValidatorService } from '@annuadvent/ngx-core/helpers-forms';
 
 @NgModule({
   declarations: [
     DeliveryInstructionFormComponent,
     AddressFormComponent,
     AddressComponent,
-    AddressListComponent,
+    AddressListComponent
   ],
   providers: [AddressFormService, PincodeValidatorService],
   imports: [
@@ -32,13 +32,13 @@ import { CardModule } from '@annuadvent/ngx-common-ui/card';
     SpinnerModule,
     SingleSelectBoxModule,
     CollapsibleModule,
-    CardModule,
+    CardModule
   ],
   exports: [
     DeliveryInstructionFormComponent,
     AddressFormComponent,
     AddressComponent,
-    AddressListComponent,
-  ],
+    AddressListComponent
+  ]
 })
 export class AddressModule {}

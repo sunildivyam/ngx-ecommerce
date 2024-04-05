@@ -1,249 +1,36 @@
-<form class="form-group container" [formGroup]="fm">
-  <!-- Readonly Address -->
-  <div *ngIf="instructionsOnly" class="row">
-    <anu-address [value]="value"></anu-address>
-  </div>
+<!-- Readonly Address -->
+<div *ngIf="instructionsOnly" class="row">
+  <anu-address [value]="value"></anu-address>
+</div>
 
-  <ng-container *ngIf="!instructionsOnly">
-    <div class="row">
-      <div class="spacing-around-v col-6">
-        <label for="countryCode">Country</label>
+<ng-container *ngIf="!instructionsOnly">
+  <anu-dynamic-form
+    [params]="addressParams"
+    [value]="value"
+    [cancelBtnLabel]="cancelBtnLabel"
+    [saveBtnLabel]="saveBtnLabel"
+    (cancelClicked)="onCancel($event)"
+    (submitClicked)="onSubmit($event)"
+    (changed)="onChange($event)"
+  ></anu-dynamic-form>
+</ng-container>
 
-        <select id="countryCode" formControlName="countryCode">
-          <option
-            *ngFor="let ct of countriesEnum | objectToArray"
-            [value]="ct.key"
-          >
-            {{ ct?.value }}
-          </option>
-        </select>
-      </div>
-
-      <div class="spacing-around-v col-6 relative">
-        <label for="pincode">Pincode</label>
-        <input
-          id="pincode"
-          type="text"
-          formControlName="pincode"
-          placeholder="6 digits [0-9] PIN code"
-        />
-        <anu-form-error
-          *ngIf="pincode.invalid && (pincode.touched || pincode.dirty)"
-          [errors]="pincode.errors"
-        ></anu-form-error>
-        <anu-spinner
-          [show]="pincode.pending"
-          speed="fast"
-          [mode]="spinnerMode.Progress"
-        ></anu-spinner>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="spacing-around-v col-6">
-        <label for="state">State</label>
-        <select id="state" formControlName="state">
-          <option
-            *ngFor="let st of indianStatesEnum | enumToArray"
-            [value]="st"
-          >
-            {{ st }}
-          </option>
-        </select>
-      </div>
-
-      <div class="spacing-around-v col-6">
-        <label for="city">City</label>
-        <input id="city" type="text" formControlName="city" />
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="spacing-around-v col-6">
-        <label for="firstName">First Name</label>
-        <input
-          id="firstName"
-          type="text"
-          formControlName="firstName"
-          placeholder="First Name"
-        />
-        <anu-form-error
-          *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)"
-          [errors]="firstName.errors"
-          class="container"
-        >
-        </anu-form-error>
-      </div>
-
-      <div class="spacing-around-v col-6">
-        <label for="lastName">Last Name</label>
-        <input
-          id="lastName"
-          type="text"
-          formControlName="lastName"
-          placeholder="Last Name (optional)"
-        />
-        <anu-form-error
-          *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)"
-          [errors]="lastName.errors"
-        ></anu-form-error>
-      </div>
-    </div>
-
-    <div class="spacing-around-v">
-      <label for="addressLine1">Street / locality / village</label>
-      <input
-        id="addressLine1"
-        type="text"
-        formControlName="addressLine1"
-        placeholder="Street address, P.O. box, company name, c/o"
-      />
-      <anu-form-error
-        *ngIf="
-          addressLine1.invalid && (addressLine1.touched || addressLine1.dirty)
-        "
-        [errors]="addressLine1.errors"
-      ></anu-form-error>
-    </div>
-
-    <div class="spacing-around-v">
-      <label for="addressLine2" class="hidden">Address Line 2</label>
-      <input
-        id="addressLine2"
-        type="text"
-        formControlName="addressLine2"
-        placeholder="Apartment, suite, unit, building, floor, etc. (optional)"
-      />
-      <anu-form-error
-        *ngIf="
-          addressLine2.invalid && (addressLine2.touched || addressLine2.dirty)
-        "
-        [errors]="addressLine2.errors"
-      ></anu-form-error>
-    </div>
-    <div class="spacing-around-v">
-      <label for="landmark">Landmark</label>
-      <input
-        id="landmark"
-        type="text"
-        formControlName="landmark"
-        placeholder="Nearest landmark (optional)"
-      />
-      <anu-form-error
-        *ngIf="landmark.invalid && (landmark.touched || landmark.dirty)"
-        [errors]="landmark.errors"
-      ></anu-form-error>
-    </div>
-
-    <div class="spacing-around-v">
-      <label for="phoneNumber"
-        >Mobile Phone <small> (May be used to assist delivery) </small></label
-      >
-      <input id="phoneNumber" type="text" formControlName="phoneNumber" />
-      <anu-form-error
-        *ngIf="
-          phoneNumber.invalid && (phoneNumber.touched || phoneNumber.dirty)
-        "
-        [errors]="phoneNumber.errors"
-      ></anu-form-error>
-    </div>
-
-    <!-- Make Default Address -->
-    <div class="spacing-around-v row">
-      <label class="form-control">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          [checked]="isDefault"
-          [value]="isDefault"
-          (change)="onDefaultClick($event)"
-        />
-        <span>Make this my default address</span>
-      </label>
-    </div>
-  </ng-container>
-
-  <!-- Deliver Instructions -->
-  <div class="spacing-around-v">
-    <label for="addressType">Please select an address type</label>
-
-    <anu-single-select-box
-      id="addressType"
-      keyField="key"
-      labelField="value"
-      [items]="addressTypeItems"
-      [selectedItem]="addressTypeSelected"
-      (changed)="onAddressTypeChange($event)"
-    >
-    </anu-single-select-box>
-
-    <anu-form-error
-      *ngIf="addressType.invalid && (addressType.touched || addressType.dirty)"
-      [errors]="addressType.errors"
-    ></anu-form-error>
-  </div>
-
-  <div class="spacing-around-v">
-    <anu-collapsible
-      [collapsed]="false"
-      [hamBurgerClassNames]="[
-        'size-sm',
-        'secondary-light-grad-h',
-        ' spacing-half'
-      ]"
-      [isDropdownStyle]="true"
-    >
-      <anu-collapsible-header>
-        <strong>Add delivery instructions.</strong>
-      </anu-collapsible-header>
-      <anu-collapsible-content>
-        <div
-          class="spacing-around-v"
-          *ngIf="addressType.value === addressTypesEnum.Business"
-        >
-          <label for="company">Company Name</label>
-          <input
-            id="company"
-            type="text"
-            formControlName="company"
-            placeholder="Office, retail store, hotel, hospital, malls, etc."
-          />
-          <anu-form-error
-            *ngIf="company.invalid && (company.touched || company.dirty)"
-            [errors]="company.errors"
-          ></anu-form-error>
-        </div>
-
-        <div class="spacing-around-v">
-          <anu-delivery-instruction-form
-            [value]="deliveryInstruction.value"
-            (changed)="onDeliveryInstructionChange($event)"
-            (statusChanged)="onDeliveryInstructionStatusChange($event)"
-          >
-          </anu-delivery-instruction-form>
-        </div>
-      </anu-collapsible-content>
-    </anu-collapsible>
-  </div>
-
-  <div *ngIf="fm.invalid && submitTried" class="row center">
-    <label class="error"
-      >Address has errors, please recheck your address above.</label
-    >
-  </div>
-
-  <div class="row center">
-    <input
-      type="submit"
-      class="btn primary"
-      (click)="onSubmit($event)"
-      [value]="saveBtnLabel"
-    />
-    <input
-      type="button"
-      class="btn primary"
-      (click)="onCancel($event)"
-      [value]="cancelBtnLabel"
-    />
-  </div>
-</form>
+<!-- Deliver Instructions -->
+<div class="spacing-around-v">
+  <anu-collapsible
+    [collapsed]="false"
+    [hamBurgerClassNames]="[
+      'size-sm',
+      'secondary-light-grad-h',
+      ' spacing-half'
+    ]"
+    [isDropdownStyle]="true"
+  >
+    <anu-collapsible-header>
+      <strong>Add delivery instructions.</strong>
+    </anu-collapsible-header>
+    <anu-collapsible-content>
+      <!-- COLAP -->
+    </anu-collapsible-content>
+  </anu-collapsible>
+</div>

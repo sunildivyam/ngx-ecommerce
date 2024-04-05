@@ -3,8 +3,8 @@ import { AddressTypesEnum } from '@annuadvent/ngx-core/helpers-ecommerce';
 
 export {
   trimSpacesValidator,
-  mobilePhoneValidator
-} from '@annuadvent/ngx-core/helpers-ecommerce';
+  indiaMobileValidator
+} from '@annuadvent/ngx-core/helpers-forms';
 
 export const companyValidator = (
   control: AbstractControl
