@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -8,34 +7,11 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from '@angular/forms';
-import {
-  ADDRESS_FIELD_LENGTH,
-  Address,
-  AddressTypesEnum,
-  CountriesEnum,
-  DeliveryInstruction
-} from '@annuadvent/ngx-core/helpers-ecommerce';
-import {
-  IndianStatesEnum,
-  WeekDaysEnum
-} from '@annuadvent/ngx-core/helpers-ecommerce';
-import { SpinnerMode } from '@annuadvent/ngx-common-ui/spinner';
-import {
-  companyValidator,
-  indiaMobileValidator,
-  trimSpacesValidator
-} from '../../constants/address.validators';
-import { EnumToArrayPipe } from '@annuadvent/ngx-core/utils';
+
+import { Address } from '@annuadvent/ngx-core/helpers-ecommerce';
 import {
   FormConfigGroup,
-  PincodeValidatorService
+  FormControlValue
 } from '@annuadvent/ngx-core/helpers-forms';
 import { addressParams } from '../../constants/address-params.constant';
 
@@ -126,10 +102,17 @@ export class AddressFormComponent implements OnInit, OnChanges {
   public onSubmit(value: Address): void {
     this.submitClicked.emit(value);
   }
+
   public onChange(value: Address): void {
-    console.log(value);
     this.changed.emit(value);
   }
+
+  public onControlValueChange(value: FormControlValue): void {
+    if (value.key === 'isDefault') {
+      this.defaultChanged.emit(value?.value);
+    }
+  }
+
   public onCancel(event: any): void {
     this.cancelClicked.emit();
   }

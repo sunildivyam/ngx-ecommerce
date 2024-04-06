@@ -6,31 +6,13 @@
 <ng-container *ngIf="!instructionsOnly">
   <anu-dynamic-form
     [params]="addressParams"
+    [loading]="loading"
     [value]="value"
     [cancelBtnLabel]="cancelBtnLabel"
     [saveBtnLabel]="saveBtnLabel"
     (cancelClicked)="onCancel($event)"
     (submitClicked)="onSubmit($event)"
     (changed)="onChange($event)"
+    (controlValueChanged)="onControlValueChange($event)"
   ></anu-dynamic-form>
 </ng-container>
-
-<!-- Deliver Instructions -->
-<div class="spacing-around-v">
-  <anu-collapsible
-    [collapsed]="false"
-    [hamBurgerClassNames]="[
-      'size-sm',
-      'secondary-light-grad-h',
-      ' spacing-half'
-    ]"
-    [isDropdownStyle]="true"
-  >
-    <anu-collapsible-header>
-      <strong>Add delivery instructions.</strong>
-    </anu-collapsible-header>
-    <anu-collapsible-content>
-      <!-- COLAP -->
-    </anu-collapsible-content>
-  </anu-collapsible>
-</div>
