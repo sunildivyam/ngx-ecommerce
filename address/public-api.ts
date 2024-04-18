@@ -2,7 +2,6 @@
 export * from './src/address.module';
 
 // Components
-export * from './src/components/delivery-instruction-form/delivery-instruction-form.component';
 export * from './src/components/address-form/address-form.component';
 export * from './src/components/address/address.component';
 export * from './src/components/address-list/address-list.component';

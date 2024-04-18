@@ -1,5 +1,9 @@
-<anu-card>
-  <anu-card-title> Product Info </anu-card-title>
-  <anu-card-body> Product description </anu-card-body>
-  <anu-card-footer> Product Buy </anu-card-footer>
-</anu-card>
+<anu-slideshow class="">
+  <div class="row nowrap" *ngFor="let img of value.images">
+    <anu-picture class="container slideshow_item" [src]="img" [alt]="value.title"
+      [defaultSrc]="defaultImageUrl"></anu-picture>
+  </div>
+</anu-slideshow>
+<label class="container center spacing"><strong>{{value.title}}</strong></label>
+<anu-smart-button class="container primary-dark-grad-h" [href]="href + '/' + value.id"
+  [label]="'Buy Now'"></anu-smart-button>

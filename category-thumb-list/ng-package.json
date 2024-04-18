@@ -1,0 +1,11 @@
+{
+	"$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+	"dest": "../../../dist/ngx-ecommerce/category-thumb-list",
+	"lib": {
+		"entryFile": "./public-api.ts",
+		"cssUrl": "inline",
+		"styleIncludePaths": [
+			"../scss"
+		]
+	}
+}

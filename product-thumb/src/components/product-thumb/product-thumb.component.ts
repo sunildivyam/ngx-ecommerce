@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
+import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
+import { DEFAULT_PRODUCT_IMAGE_PROVIDER } from '../../constants/product-thumb.constant';
 
 /**
  *
@@ -23,6 +25,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'anu-product-thumb',
   templateUrl: './product-thumb.component.html',
-  styleUrls: ['./product-thumb.component.scss'],
+  styleUrls: ['./product-thumb.component.scss']
 })
-export class ProductThumbComponent {}
+export class ProductThumbComponent {
+  @Input() value: Product = null;
+  @Input() href: string = '';
+  constructor(
+    @Inject(DEFAULT_PRODUCT_IMAGE_PROVIDER) public defaultImageUrl: string
+  ) {}
+}
