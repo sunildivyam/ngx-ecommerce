@@ -30,6 +30,8 @@ import { DEFAULT_PRODUCT_IMAGE_PROVIDER } from '../../constants/product-thumb.co
 export class ProductThumbComponent {
   @Input() value: Product = null;
   @Input() href: string = '';
+  @Input() actionLabel: string = 'Buy Now';
+
   constructor(
     @Inject(DEFAULT_PRODUCT_IMAGE_PROVIDER) public defaultImageUrl: string
   ) {}

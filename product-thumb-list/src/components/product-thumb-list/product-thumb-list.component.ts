@@ -10,4 +10,12 @@ export class ProductThumbListComponent {
   @Input() items: Array<Product> = [];
   @Input() itemClassNames: Array<string> = [];
   @Input() href: string = '';
+  @Input() actionLabel: string = 'Buy Now';
+  @Input() enableAdd: boolean = false;
+
+  @Output() addClicked = new EventEmitter<void>();
+
+  public onAddClick(event: any): void {
+    this.addClicked.emit();
+  }
 }

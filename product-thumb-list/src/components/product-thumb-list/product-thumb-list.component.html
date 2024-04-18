@@ -1,3 +1,8 @@
+<div *ngIf="enableAdd" [ngClass]="itemClassNames" class="add-btn container center middle primary-lightest-grad-h"
+    (click)="onAddClick($event)">
+    <anu-smart-button class="spacing" label="+ Add"></anu-smart-button>
+</div>
 <ng-container *ngFor="let item of items">
-    <anu-product-thumb [ngClass]="itemClassNames" [value]="item" [href]="href"></anu-product-thumb>
+    <anu-product-thumb [ngClass]="itemClassNames" [value]="item" [href]="href"
+        [actionLabel]="actionLabel"></anu-product-thumb>
 </ng-container>
