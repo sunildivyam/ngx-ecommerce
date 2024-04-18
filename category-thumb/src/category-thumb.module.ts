@@ -4,10 +4,17 @@ import { CategoryThumbComponent } from './components/category-thumb/category-thu
 import { CardModule } from '@annuadvent/ngx-common-ui/card';
 import { PictureModule } from '@annuadvent/ngx-common-ui/picture';
 import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
+import { HelpersCategoriesModule } from '@annuadvent/ngx-core/helpers-categories';
 
 @NgModule({
   declarations: [CategoryThumbComponent],
-  imports: [CommonModule, CardModule, PictureModule, SmartButtonModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    PictureModule,
+    SmartButtonModule,
+    HelpersCategoriesModule
+  ],
   exports: [CategoryThumbComponent]
 })
 export class CategoryThumbModule {}
