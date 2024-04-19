@@ -3,7 +3,11 @@
     <anu-picture class="container slideshow_item" [src]="img | ProductThumbImageUrl: value" [alt]="value?.title"
       [defaultSrc]="defaultImageUrl"></anu-picture>
   </div>
+  <div *ngIf="!value?.images?.length" class="row nowrap">
+    <anu-picture class="container slideshow_item" [defaultSrc]="defaultImageUrl"></anu-picture>
+  </div>
 </anu-slideshow>
-<label class="container center spacing"><strong>{{value?.title}}</strong></label>
+<label class="container center spacing"><strong class="text-center">{{value?.title}}</strong></label>
+
 <anu-smart-button class="container primary-dark-grad-h" [href]="href + '/' + value?.id"
   [label]="actionLabel"></anu-smart-button>
