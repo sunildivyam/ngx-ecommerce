@@ -19,6 +19,8 @@ import { LevelCategoriesOfPipe } from './pipes/level-categories-of.pipe';
 import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
 import { ErrorModule } from '@annuadvent/ngx-common-ui/error';
 import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
+import { PictureModule } from '@annuadvent/ngx-common-ui/picture';
+import { HelpersEcommerceModule } from '@annuadvent/ngx-core/helpers-ecommerce';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
     TabsModule,
     SmartButtonModule,
     ErrorModule,
-    SpinnerModule
+    SpinnerModule,
+    PictureModule,
+    HelpersEcommerceModule
   ],
   exports: [ManageProductComponent]
 })

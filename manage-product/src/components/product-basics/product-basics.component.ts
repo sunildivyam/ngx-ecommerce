@@ -18,8 +18,4 @@ export class ProductBasicsComponent {
   public onSave(product: Product): void {
     this.mpS.saveBasics(product);
   }
-
-  public onCancel(event: any): void {
-    // TODO: navigate Back
-  }
 }
