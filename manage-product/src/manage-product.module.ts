@@ -9,7 +9,7 @@ import { ProductImagesComponent } from './components/product-images/product-imag
 import { ProductQuantitiesComponent } from './components/product-quantities/product-quantities.component';
 import { ProductOffersComponent } from './components/product-offers/product-offers.component';
 import { ProductPublishComponent } from './components/product-publish/product-publish.component';
-import { ProductDeliveryComponent } from './components/product-delivery/product-delivery.component';
+import { ProductDispatchComponent } from './components/product-dispatch/product-dispatch.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormModule } from '@annuadvent/ngx-common-ui/reactive-form';
 import { TabsModule } from '@annuadvent/ngx-common-ui/tabs';
@@ -34,7 +34,7 @@ import { ProductThumbModule } from '@annuadvent/ngx-ecommerce/product-thumb';
     ProductQuantitiesComponent,
     ProductOffersComponent,
     ProductPublishComponent,
-    ProductDeliveryComponent,
+    ProductDispatchComponent,
     LevelCategoriesOfPipe
   ],
   providers: [ManageProductService],

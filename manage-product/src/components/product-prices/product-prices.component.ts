@@ -38,7 +38,7 @@ export class ProductPricesComponent {
       }
 
       this.pricesParams = pParams;
-      this.price = { ...p.price };
+      this.price = p?.price ? { ...p.price } : null;
     });
   }
 

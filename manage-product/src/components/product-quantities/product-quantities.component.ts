@@ -31,7 +31,7 @@ export class ProductQuantitiesComponent {
       }
 
       this.qtysParams = pParams;
-      this.qty = { ...p.qty };
+      this.qty = p?.qty ? { ...p.qty } : null;
     });
   }
 

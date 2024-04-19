@@ -14,12 +14,13 @@
     <anu-product-prices [ngClass]="{'hidden': activeTab.name !== 'prices'}"></anu-product-prices>
     <anu-product-quantities [ngClass]="{'hidden': activeTab.name !== 'qtys'}"></anu-product-quantities>
     <anu-product-offers [ngClass]="{'hidden': activeTab.name !== 'offers'}"></anu-product-offers>
-    <anu-product-delivery [ngClass]="{'hidden': activeTab.name !== 'delivery'}"></anu-product-delivery>
+    <anu-product-dispatch [ngClass]="{'hidden': activeTab.name !== 'dispatch'}"></anu-product-dispatch>
     <anu-product-publish [ngClass]="{'hidden': activeTab.name !== 'publish'}"></anu-product-publish>
 
     <anu-spinner [show]="mpS.loading | async"></anu-spinner>
 </div>
 
-<div class="col-sm-12 col-md-3 col-lg-3">
-    <anu-product-thumb [value]="mpS.product | async" href="." [actionLabel]="'Preview'"></anu-product-thumb>
+<div class="col-sm-12 col-md-3 col-lg-3 center">
+    <anu-product-thumb [value]="mpS.product | async" href="/seller/inventory/manage-product"
+        [actionLabel]="'Preview'"></anu-product-thumb>
 </div>

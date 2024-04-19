@@ -1,9 +1,9 @@
 <anu-slideshow class="">
-  <div class="row nowrap" *ngFor="let img of value.images">
-    <anu-picture class="container slideshow_item" [src]="img | ProductThumbImageUrl: value" [alt]="value.title"
+  <div class="row nowrap" *ngFor="let img of value?.images">
+    <anu-picture class="container slideshow_item" [src]="img | ProductThumbImageUrl: value" [alt]="value?.title"
       [defaultSrc]="defaultImageUrl"></anu-picture>
   </div>
 </anu-slideshow>
-<label class="container center spacing"><strong>{{value.title}}</strong></label>
-<anu-smart-button class="container primary-dark-grad-h" [href]="href + '/' + value.id"
+<label class="container center spacing"><strong>{{value?.title}}</strong></label>
+<anu-smart-button class="container primary-dark-grad-h" [href]="href + '/' + value?.id"
   [label]="actionLabel"></anu-smart-button>

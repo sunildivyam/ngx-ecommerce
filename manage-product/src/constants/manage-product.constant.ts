@@ -33,8 +33,8 @@ export const flowTabs: Array<Tab> = [
     title: 'Offers'
   },
   {
-    name: 'delivery',
-    title: 'Delivery Period'
+    name: 'dispatch',
+    title: 'Dispatch Period'
   },
   {
     name: 'publish',

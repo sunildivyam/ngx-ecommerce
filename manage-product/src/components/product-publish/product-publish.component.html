@@ -1,1 +1,29 @@
-<p>product-publish works!</p>
+<h2>Get started to recieve Orders</h2>
+<h3>Checklist:</h3>
+<p>Before you make your product live and up for selling, Please check following:</p>
+<ol>
+    <li><strong>Title:</strong> Your product has a title that well identifies your product.</li>
+    <li><strong>Description:</strong> Your product has a description that well describes your product and its features.
+    </li>
+    <li><strong>Product Images:</strong>Upload atleast 4 product images of good quality and of specified dimensions</li>
+    <li><strong>Sizes:</strong>Add all available sizes of your product, that you have in your inventory and want to
+        sell.</li>
+    <li><strong>Price:</strong>Add price of each available size of your product that you want to sell excluding
+        discounts and taxes.</li>
+    <li><strong>Qty:</strong>Add available quantities from your inventory for each available size. A zero qty means
+        product is Out of Stock</li>
+    <li><strong>Offers:</strong>Add discounts in percentage of price if you want to offer to your customers for each
+        size of product.</li>
+    <li><strong>Dispatch Period:</strong>Add minimum and maximum dispatch time, you need to after the order is placed.
+        This is not delivery time. Delivery time additionally starts once your product is dispatched.</li>
+</ol>
+<div class="col-12 center">
+    <p>Hope you are good with your product.
+        Go ahead, Happy Selling! </p>
+    <h3>{{(mpS.product | async)?.title}}</h3>
+    <strong [ngClass]="(mpS.product | async)?.isLive ? 'success': 'error'">Currently - {{(mpS.product | async)?.isLive
+        ?
+        'Live': 'Offline'}}</strong>
+    <anu-smart-button class="spacing spacing-around" [loading]="mpS.loading | async"
+        label="Go Live - {{(mpS.product | async)?.id}}" (click)="onPublish($event)"></anu-smart-button>
+</div>

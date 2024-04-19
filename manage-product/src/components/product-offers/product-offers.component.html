@@ -1,1 +1,2 @@
-<p>product-offers works!</p>
+<anu-dynamic-form [params]="offersParams" [value]="offer" [loading]="mpS.loading | async" [enableCancelBtn]="false"
+    (submitClicked)="onSave($event)"></anu-dynamic-form>

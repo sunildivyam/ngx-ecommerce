@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ManageProductService } from '../../services/manage-product.service';
 
 @Component({
   selector: 'anu-product-publish',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./product-publish.component.scss']
 })
 export class ProductPublishComponent {
+  constructor(public mpS: ManageProductService) {}
+  public onPublish(event: any) {
+    event.stopPropagation();
 
+    this.mpS.goLive();
+  }
 }

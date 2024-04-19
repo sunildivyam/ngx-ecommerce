@@ -231,4 +231,88 @@ export class ManageProductService {
 
     return await this.updateProduct(p);
   }
+
+  public async saveOffer(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { offer } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, offer });
+
+    return await this.updateProduct(p);
+  }
+
+  public async saveDispatch(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { minDispatchTime, maxDispatchTime } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({
+          ...this.$product.value,
+          minDispatchTime,
+          maxDispatchTime
+        });
+
+    return await this.updateProduct(p);
+  }
+
+  public async goLive(): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    if (this.isNewProduct) {
+      this.$error.next(
+        new AppError(
+          'Add product and its all information before getting it GO LIVE'
+        )
+      );
+      this.$loading.next(false);
+    }
+
+    if (!this.isProductGoLiveReady()) {
+      return;
+    }
+
+    const p: Product = new Product({
+      ...this.$product.value,
+      isLive: true
+    });
+
+    return await this.updateProduct(p);
+  }
+
+  private isProductGoLiveReady(): boolean {
+    const maxLevels = this.gcService.getValue(
+      GlobalConfigParamsEnum.categoryMaxLevels
+    );
+
+    const error = new AppError({ code: 'GO_LIVE_NOT_READY' });
+    let msg = '';
+    const p = this.$product.value;
+    if (!p.title) msg += 'title missing </br>';
+    if (!p.description) msg += 'description missing </br>';
+    if (!p.brand) msg += 'brand missing </br>';
+    if (p.categories?.length != maxLevels)
+      msg += 'One or more Categories missing </br>';
+    if (!p.images?.length) msg += 'Product images missing </br>';
+    if (!p.sizes?.length) msg += 'Sizes missing </br>';
+    if (!p.price) msg += 'price missing </br>';
+    if (!p.qty) msg += 'qty missing </br>';
+    if (!p.offer) msg += 'offer missing </br>';
+    if (!p.minDispatchTime) msg += 'min dispatch time missing </br>';
+    if (!p.maxDispatchTime) msg += 'max dispatch time missing </br>';
+
+    if (msg) {
+      error.message = msg;
+      this.$error.next(error);
+      this.$loading.next(false);
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
