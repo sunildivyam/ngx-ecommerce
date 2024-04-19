@@ -12,6 +12,13 @@ import { ProductPublishComponent } from './components/product-publish/product-pu
 import { ProductDeliveryComponent } from './components/product-delivery/product-delivery.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormModule } from '@annuadvent/ngx-common-ui/reactive-form';
+import { TabsModule } from '@annuadvent/ngx-common-ui/tabs';
+import { ManageProductService } from './services/manage-product.service';
+import { FormsModule } from '@angular/forms';
+import { LevelCategoriesOfPipe } from './pipes/level-categories-of.pipe';
+import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
+import { ErrorModule } from '@annuadvent/ngx-common-ui/error';
+import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
 
 @NgModule({
   declarations: [
@@ -24,9 +31,20 @@ import { ReactiveFormModule } from '@annuadvent/ngx-common-ui/reactive-form';
     ProductQuantitiesComponent,
     ProductOffersComponent,
     ProductPublishComponent,
-    ProductDeliveryComponent
+    ProductDeliveryComponent,
+    LevelCategoriesOfPipe
   ],
-  imports: [CommonModule, HttpClientModule, ReactiveFormModule],
+  providers: [ManageProductService],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormModule,
+    TabsModule,
+    SmartButtonModule,
+    ErrorModule,
+    SpinnerModule
+  ],
   exports: [ManageProductComponent]
 })
 export class ManageProductModule {}

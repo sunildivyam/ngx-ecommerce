@@ -4,12 +4,14 @@ import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { MANAGE_PRODUCT_API_URLS_PROVIDER } from '../constants/manage-product.constant';
 import { HttpClient } from '@angular/common/http';
+import { Category } from '@annuadvent/ngx-core/helpers-categories';
 
 @Injectable()
 export class ManageProductService {
   private $product = new BehaviorSubject<Product>(null);
   private $error = new BehaviorSubject<AppError>(null);
   private $loading = new BehaviorSubject<boolean>(false);
+  private $categories = new BehaviorSubject<Array<Category>>([]);
 
   constructor(
     @Inject(MANAGE_PRODUCT_API_URLS_PROVIDER) private apiUrls: any,
@@ -36,6 +38,14 @@ export class ManageProductService {
     return !this.$product.value?.id;
   }
 
+  public get categories(): Observable<Array<Category>> {
+    return this.$categories.asObservable();
+  }
+
+  public set categories(v: Array<Category>) {
+    this.$categories.next(v);
+  }
+
   private generateProductId(): string {
     return Math.floor(new Date().valueOf() * Math.random()).toString();
   }
@@ -47,15 +57,9 @@ export class ManageProductService {
       );
     }
   }
-
-  public async saveBasics(product: Product): Promise<void> {
+  private async updateProduct(p: Product): Promise<void> {
     this.$error.next(null);
     this.$loading.next(true);
-
-    const { id, title, description, brand } = product;
-    const p = this.isNewProduct
-      ? { ...product, id: this.generateProductId() }
-      : { ...this.$product.value, id, title, description, brand };
 
     const url = this.isNewProduct
       ? this.apiUrls.ADD
@@ -74,5 +78,29 @@ export class ManageProductService {
       this.$loading.next(false);
       return;
     }
+  }
+
+  public async saveBasics(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { id, title, description, brand } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, id, title, description, brand });
+
+    return await this.updateProduct(p);
+  }
+
+  public async saveCategories(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { categories } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, categories });
+
+    return await this.updateProduct(p);
   }
 }

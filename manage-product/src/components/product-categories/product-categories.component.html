@@ -1,1 +1,22 @@
-<p>product-categories works!</p>
+<h2>Group your product under related categories</h2>
+<div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4 spacing shadow-half" *ngFor="let lCat of selectedCatIds; let index = index">
+        <label> Choose a Level {{index + 1}} Category</label>
+        <select *ngIf="index === 0 || (index > 0 && selectedCatIds[index - 1])" [(ngModel)]="selectedCatIds[index]"
+            (ngModelChange)="onCatSelect($event, index + 1)">
+            <option [value]="''">Choose..</option>
+            <option
+                *ngFor="let cat of mpS.categories | async | levelCategoriesOf: selectedCatIds[index - 1] || '': index + 1"
+                [value]="cat.id">
+                {{cat.title}}</option>
+        </select>
+    </div>
+</div>
+<div *ngIf="error" class="row">
+    <anu-error [message]="error.message"></anu-error>
+</div>
+
+<div class="row spacing center">
+    <anu-smart-button class="spacing-half primary-normal-grad-h col-sm-12" label="Save Categories"
+        (click)="onSave($event)"></anu-smart-button>
+</div>
