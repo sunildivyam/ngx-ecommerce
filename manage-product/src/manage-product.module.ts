@@ -21,6 +21,7 @@ import { ErrorModule } from '@annuadvent/ngx-common-ui/error';
 import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
 import { PictureModule } from '@annuadvent/ngx-common-ui/picture';
 import { HelpersEcommerceModule } from '@annuadvent/ngx-core/helpers-ecommerce';
+import { ProductThumbModule } from '@annuadvent/ngx-ecommerce/product-thumb';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { HelpersEcommerceModule } from '@annuadvent/ngx-core/helpers-ecommerce';
     ErrorModule,
     SpinnerModule,
     PictureModule,
-    HelpersEcommerceModule
+    HelpersEcommerceModule,
+    ProductThumbModule
   ],
   exports: [ManageProductComponent]
 })

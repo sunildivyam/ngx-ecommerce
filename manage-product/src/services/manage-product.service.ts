@@ -195,4 +195,40 @@ export class ManageProductService {
       this.$loading.next(false);
     }
   }
+
+  public async saveSizes(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { sizes } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, sizes });
+
+    return await this.updateProduct(p);
+  }
+
+  public async savePrice(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { price } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, price });
+
+    return await this.updateProduct(p);
+  }
+
+  public async saveQty(product: Product): Promise<void> {
+    this.$error.next(null);
+    this.$loading.next(true);
+
+    const { qty } = product;
+    const p: Product = this.isNewProduct
+      ? new Product({ ...product, id: this.generateProductId() })
+      : new Product({ ...this.$product.value, qty });
+
+    return await this.updateProduct(p);
+  }
 }

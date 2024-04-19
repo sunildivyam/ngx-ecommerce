@@ -1,8 +1,9 @@
+<h1 class="row center spacing-around-v">{{(mpS.product |async)?.title}}</h1>
 <div class="col-sm-3 col-md-3 col-lg-2">
     <anu-tabs [tabs]="flowTabs" [activeTab]="activeTab" [vertical]="true" (changed)="onTabChange($event)"></anu-tabs>
 </div>
 
-<div class="col-sm-9 col-md-9 col-lg-10 relative">
+<div class="col-sm-9 col-md-6 col-lg-7 relative">
     <anu-error *ngIf="mpS.error | async" [code]="(mpS.error |async)?.code"
         [message]="(mpS.error |async)?.message"></anu-error>
 
@@ -11,10 +12,14 @@
     <anu-product-images [ngClass]="{'hidden': activeTab.name !== 'images'}"></anu-product-images>
     <anu-product-sizes [ngClass]="{'hidden': activeTab.name !== 'sizes'}"></anu-product-sizes>
     <anu-product-prices [ngClass]="{'hidden': activeTab.name !== 'prices'}"></anu-product-prices>
-    <anu-product-quantities [ngClass]="{'hidden': activeTab.name !== 'quantities'}"></anu-product-quantities>
+    <anu-product-quantities [ngClass]="{'hidden': activeTab.name !== 'qtys'}"></anu-product-quantities>
     <anu-product-offers [ngClass]="{'hidden': activeTab.name !== 'offers'}"></anu-product-offers>
     <anu-product-delivery [ngClass]="{'hidden': activeTab.name !== 'delivery'}"></anu-product-delivery>
     <anu-product-publish [ngClass]="{'hidden': activeTab.name !== 'publish'}"></anu-product-publish>
 
     <anu-spinner [show]="mpS.loading | async"></anu-spinner>
+</div>
+
+<div class="col-sm-12 col-md-3 col-lg-3">
+    <anu-product-thumb [value]="mpS.product | async" href="." [actionLabel]="'Preview'"></anu-product-thumb>
 </div>

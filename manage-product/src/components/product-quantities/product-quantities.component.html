@@ -1,1 +1,2 @@
-<p>product-quantities works!</p>
+<anu-dynamic-form [params]="qtysParams" [value]="qty" [loading]="mpS.loading | async" [enableCancelBtn]="false"
+    (submitClicked)="onSave($event)"></anu-dynamic-form>

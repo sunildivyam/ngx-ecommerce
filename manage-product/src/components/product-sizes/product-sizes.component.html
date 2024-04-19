@@ -1,1 +1,2 @@
-<p>product-sizes works!</p>
+<anu-dynamic-form [params]="sizesParams" [value]="mpS.product | async" [loading]="mpS.loading | async"
+    [enableCancelBtn]="false" (submitClicked)="onSave($event)"></anu-dynamic-form>
