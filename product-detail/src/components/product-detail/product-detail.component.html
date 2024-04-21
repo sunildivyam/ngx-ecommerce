@@ -1,1 +1,88 @@
-<p>product-detail works!</p>
+<div class="col-sm-12 col-md-6 col-lg-7">
+    <div class="row">
+        <div class="col-sm-12 col-md-2 col-lg-4">
+            <!-- Photo List -->
+            <div class="row" *ngFor="let pic of product?.images">
+                <anu-picture class="product-imagelist-item col-sm-2 col-md-6 col-lg-6"
+                    [ngClass]="{'active': pic === activeImage}" [src]="pic | ProductThumbImageUrl: product"
+                    [alt]="product?.title" [title]="product?.title" (click)="setActiveImage(pic)"></anu-picture>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-10 col-lg-8">
+            <!-- Active Photo Zoomable -->
+            <lib-ngx-image-zoom [thumbImage]="activeImage | ProductImageUrl: product"
+                [fullImage]="activeImage | ProductImageUrl: product"></lib-ngx-image-zoom>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-md-6 col-lg-5">
+    <h1 class="product-brand accent-deep-dark">{{product?.brand?.toUpperCase()}}</h1>
+    <h1 class="product-title">{{product?.title}}</h1>
+
+    <!-- Sizes -->
+    <label class="product-size accent-deep-dark"><strong>SELECT SIZE</strong></label>
+    <div class="row">
+        <ng-container *ngFor="let sz of product?.sizes">
+            <anu-smart-button *ngIf="product?.price[sz] > 0"
+                class="product-size-btn border border-round center spacing-around-half"
+                [ngClass]="{'active': activeSize === sz, 'out-of-stock': product?.qty[sz] <= 0}"
+                (click)="setActiveSize(sz)">
+
+                <div class="product-size-labels row center">
+                    <!-- Size -->
+                    <strong class="row center">{{sz}}</strong>
+
+                    <!-- PRICE -->
+                    <small class="row center">Rs.
+                        {{product?.price[sz] | sellingprice: product?.offer[sz]}}</small>
+
+                    <!-- Qty alert -->
+                    <small *ngIf="product?.qty[sz] == 1"
+                        class="product-size-qtyalert row center primary-darkest-grad-h accent-deep-light spacing-h">{{product?.qty[sz]}}
+                        left</small>
+                </div>
+
+            </anu-smart-button>
+        </ng-container>
+
+    </div>
+
+    <!-- Qty -->
+    <div class="row">
+        <label class="product-qty" for="qty">Choose Qty</label>
+        <select class="product-qty-list" name="qty" id="qty" [(ngModel)]="activeQty"
+            (ngModelChange)="onQtyChange($event)">
+            <option *ngFor="let qt of allowedQty" [value]="qt">{{qt}}</option>
+        </select>
+    </div>
+
+    <!-- Price -->
+    <div class="row">
+        <label class="product-price row nowrap" *ngIf="product?.offer[activeSize] > 0">
+            <strong class="product-price-selling accent-deep-dark">Rs. {{product?.price[activeSize] | sellingprice:
+                product?.offer[activeSize]}}</strong>
+            <span class="product-price-mrp text-strike">MRP Rs. {{product?.price[activeSize]}}</span>
+            <strong class="product-price-discount warning">({{product?.offer[activeSize]}}% OFF)</strong>
+        </label>
+        <label class="product-price" *ngIf="product?.offer[activeSize] <= 0">
+            <strong class="product-price-selling accent-deep-dark">Rs. {{product?.price[activeSize] | sellingprice:
+                product?.offer[activeSize]}}</strong>
+        </label>
+        <strong class="success row"><small>inclusive of all taxes</small></strong>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="product-actions spacing row-md row-lg">
+        <anu-smart-button class="spacing spacing-around primary-deep-dark-grad-h accent-deep-light border-round"
+            label="ADD TO BAG" (click)="onAddToBag()">
+        </anu-smart-button>
+        <anu-smart-button class="spacing spacing-around border-round" label="WISHLIST" (click)="onWishlist()">
+        </anu-smart-button>
+    </div>
+
+    <!-- Description -->
+
+    <label class="accent-deep-dark"><strong>PRODUCT DETAILS</strong></label>
+    <p class="text-left" [innerHTML]="product?.description"></p>
+</div>
