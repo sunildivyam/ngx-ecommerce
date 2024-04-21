@@ -7,6 +7,8 @@ import {
   ViewChild
 } from '@angular/core';
 import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
+import { CartService } from '@annuadvent/ngx-ecommerce/cart';
+import { WishlistService } from '@annuadvent/ngx-ecommerce/wishlist';
 import { NgxImageZoomComponent } from 'ngx-image-zoom';
 
 @Component({
@@ -25,6 +27,11 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   allowedQty: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   activeImage: string = '';
   zoomLoading: boolean = false;
+
+  constructor(
+    private cartService: CartService,
+    private wishlistService: WishlistService
+  ) {}
 
   private setAllowedQty() {
     let maxQty = this.product?.qty[this.activeSize] || 1;
@@ -60,9 +67,13 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     console.log(value);
   }
 
-  public onAddToBag(): void {}
+  public onAddToBag(): void {
+    this.cartService.add(this.product?.id, this.activeSize, this.activeQty);
+  }
 
-  public onWishlist(): void {}
+  public onWishlist(): void {
+    this.wishlistService.add(this.product?.id);
+  }
 
   public setActiveImage(pic: string = ''): void {
     this.zoomLoading = true;
