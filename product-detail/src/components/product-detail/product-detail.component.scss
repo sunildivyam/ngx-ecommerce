@@ -100,8 +100,13 @@
                 &:hover,
                 &.active {
                     @include shadow();
+                    cursor: pointer;
                 }
             }
+        }
+
+        &-zoom {
+            min-height: 10rem;
         }
     }
 }

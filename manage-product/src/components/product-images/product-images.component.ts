@@ -5,7 +5,6 @@ import {
   GlobalConfigService
 } from '@annuadvent/ngx-core/global-config';
 import { imagesParams } from '../../constants/images-params.constant';
-import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { ImageUpload } from '@annuadvent/ngx-common-ui/image-upload';
 import { AppError } from '@annuadvent/ngx-core/app-error';
 
@@ -28,6 +27,18 @@ export class ProductImagesComponent {
       this.maxCount = this.gcService.getValue(
         GlobalConfigParamsEnum.maxProductImageCount
       );
+
+      const { width, height } = this.gcService.getValue(
+        GlobalConfigParamsEnum.productImageDimensions
+      );
+
+      this.imagesParams = {
+        ...imagesParams,
+        productImages: {
+          ...imagesParams.productImages,
+          helpText: `(${width}px X ${height}px) and jpeg format is prefered.`
+        }
+      };
     });
 
     this.mpS.product.subscribe((p) => {

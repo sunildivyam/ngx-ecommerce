@@ -1,6 +1,6 @@
 <div class="row">
     <anu-picture class="col-sm-3 col-md-2 col-lg-1 center middle" *ngFor="let img of images"
-        [src]="img | ProductImageUrl: (mpS.product | async)">
+        [src]="img | ProductImageUrl: (mpS.product | async): 'sm'">
         <anu-smart-button class="spacing-h" label="Delete" (click)="onDelete($event, img)"></anu-smart-button>
     </anu-picture>
 </div>

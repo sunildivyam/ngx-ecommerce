@@ -1,6 +1,15 @@
-import { Component, Inject, Input } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { DEFAULT_PRODUCT_IMAGE_PROVIDER } from '../../constants/product-thumb.constant';
+import { SlideshowComponent } from '@annuadvent/ngx-common-ui/slideshow';
 
 /**
  *
@@ -27,7 +36,8 @@ import { DEFAULT_PRODUCT_IMAGE_PROVIDER } from '../../constants/product-thumb.co
   templateUrl: './product-thumb.component.html',
   styleUrls: ['./product-thumb.component.scss']
 })
-export class ProductThumbComponent {
+export class ProductThumbComponent implements OnInit, OnChanges {
+  @ViewChild('slideshow') slideshow: SlideshowComponent = null;
   @Input() value: Product = null;
   @Input() href: string = '';
   @Input() actionLabel: string = 'Buy Now';
@@ -35,4 +45,16 @@ export class ProductThumbComponent {
   constructor(
     @Inject(DEFAULT_PRODUCT_IMAGE_PROVIDER) public defaultImageUrl: string
   ) {}
+
+  ngOnInit(): void {
+    this.refreshSlideShow();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    changes['value'] && this.refreshSlideShow();
+  }
+
+  private refreshSlideShow(): void {
+    setTimeout(() => this.slideshow.refresh());
+  }
 }

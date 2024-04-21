@@ -1,6 +1,6 @@
-<anu-slideshow class="">
+<anu-slideshow #slideshow class="">
   <div class="row nowrap" *ngFor="let img of value?.images">
-    <anu-picture class="container slideshow_item" [src]="img | ProductThumbImageUrl: value" [alt]="value?.title"
+    <anu-picture class="container slideshow_item" [src]="img | ProductImageUrl: value: 'sm'" [alt]="value?.title"
       [defaultSrc]="defaultImageUrl"></anu-picture>
   </div>
   <div *ngIf="!value?.images?.length" class="row nowrap">

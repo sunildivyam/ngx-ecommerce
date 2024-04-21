@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { AppError } from '@annuadvent/ngx-core/app-error';
-import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
+import {
+  Product,
+  ProductImageResizeService
+} from '@annuadvent/ngx-core/helpers-ecommerce';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { MANAGE_PRODUCT_API_URLS_PROVIDER } from '../constants/manage-product.constant';
 import { HttpClient } from '@angular/common/http';
@@ -23,7 +26,8 @@ export class ManageProductService {
     @Inject(MANAGE_PRODUCT_API_URLS_PROVIDER) private apiUrls: any,
     private http: HttpClient,
     private fireImageService: FireStorageImageService,
-    private gcService: GlobalConfigService
+    private gcService: GlobalConfigService,
+    private pirService: ProductImageResizeService
   ) {}
 
   public get product(): Observable<Product> {
@@ -133,15 +137,39 @@ export class ManageProductService {
     this.$loading.next(true);
 
     // Step 1: Save all image files to firebase
-    const fireImgPromises = imageUploads.map((imageUpload) => {
-      const fullPath = `${this.gcService.getValue(
-        GlobalConfigParamsEnum.productsImagePath
-      )}/${this.$product.value.id}/${imageUpload.fileName}`;
+    const resizedImgsPromises = imageUploads.map((imageUpload) =>
+      this.pirService.resize(imageUpload)
+    );
+    const resizedImgs = await Promise.all(resizedImgsPromises);
 
-      return this.fireImageService.uploadImageByPath(
-        fullPath,
-        imageUpload.data,
-        true
+    const fireImgPromises = [];
+    imageUploads.forEach((imageUpload, index) => {
+      const productRootPath = `${this.gcService.getValue(
+        GlobalConfigParamsEnum.productsImagePath
+      )}/${this.$product.value.id}`;
+
+      const fullPathSm = `${productRootPath}/sm/${imageUpload.fileName}`;
+      const fullPathMd = `${productRootPath}/md/${imageUpload.fileName}`;
+      const fullPathLg = `${productRootPath}/lg/${imageUpload.fileName}`;
+
+      fireImgPromises.push(
+        Promise.allSettled([
+          this.fireImageService.uploadImageByPath(
+            fullPathSm,
+            resizedImgs[index][0],
+            true
+          ),
+          this.fireImageService.uploadImageByPath(
+            fullPathMd,
+            resizedImgs[index][1],
+            true
+          ),
+          this.fireImageService.uploadImageByPath(
+            fullPathLg,
+            imageUpload.data,
+            true
+          )
+        ])
       );
     });
 
@@ -174,12 +202,22 @@ export class ManageProductService {
     this.$error.next(null);
     this.$loading.next(true);
 
-    const fullPath = `${this.gcService.getValue(
+    const productRootPath = `${this.gcService.getValue(
       GlobalConfigParamsEnum.productsImagePath
-    )}/${this.$product.value.id}/${imgName}`;
+    )}/${this.$product.value.id}`;
+
+    const fullPathSm = `${productRootPath}/sm/${imgName}`;
+    const fullPathMd = `${productRootPath}/md/${imgName}`;
+    const fullPathLg = `${productRootPath}/lg/${imgName}`;
 
     try {
-      await this.fireImageService.deleteImageByPath(fullPath);
+      const deleteImgPromises = [
+        this.fireImageService.deleteImageByPath(fullPathSm),
+        this.fireImageService.deleteImageByPath(fullPathMd),
+        this.fireImageService.deleteImageByPath(fullPathLg)
+      ];
+
+      await Promise.all(deleteImgPromises);
 
       const images = this.$product.value.images.filter(
         (img) => img !== imgName

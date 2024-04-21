@@ -3,9 +3,11 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChanges
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
+import { NgxImageZoomComponent } from 'ngx-image-zoom';
 
 @Component({
   selector: 'anu-product-detail',
@@ -13,13 +15,16 @@ import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit, OnChanges {
-  @Input() product: Product = null;
+  @ViewChild('zoomimage') zoomimage: NgxImageZoomComponent = null;
+  @Input()
+  product: Product = null;
   @Input() loading: boolean = false;
 
   activeSize: string = '';
   activeQty: number = 1;
   allowedQty: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   activeImage: string = '';
+  zoomLoading: boolean = false;
 
   private setAllowedQty() {
     let maxQty = this.product?.qty[this.activeSize] || 1;
@@ -43,6 +48,7 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.setActiveSize();
     this.setActiveImage();
+    //
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,7 +65,12 @@ export class ProductDetailComponent implements OnInit, OnChanges {
   public onWishlist(): void {}
 
   public setActiveImage(pic: string = ''): void {
+    this.zoomLoading = true;
     this.activeImage =
       pic || (this.product?.images?.length && this.product?.images[0]) || '';
+  }
+
+  public onZoomImagesLoad(success: boolean): void {
+    this.zoomLoading = !success;
   }
 }

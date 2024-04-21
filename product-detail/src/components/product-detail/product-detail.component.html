@@ -2,21 +2,25 @@
     <div class="row">
         <div class="col-sm-12 col-md-2 col-lg-4">
             <!-- Photo List -->
-            <div class="row" *ngFor="let pic of product?.images">
-                <anu-picture class="product-imagelist-item col-sm-2 col-md-6 col-lg-6"
-                    [ngClass]="{'active': pic === activeImage}" [src]="pic | ProductThumbImageUrl: product"
-                    [alt]="product?.title" [title]="product?.title" (click)="setActiveImage(pic)"></anu-picture>
+            <div class="row">
+                <ng-container *ngFor="let pic of product?.images">
+                    <anu-picture class="product-imagelist-item col-sm-2 col-md-12 col-lg-6"
+                        [ngClass]="{'active': pic === activeImage}" [src]="pic | ProductImageUrl: product: 'sm'"
+                        [alt]="product?.title" [title]="product?.title" (click)="setActiveImage(pic)"></anu-picture>
+                </ng-container>
             </div>
         </div>
-        <div class="col-sm-12 col-md-10 col-lg-8">
+        <div class="col-sm-12 col-md-10 col-lg-8 relative product-zoom">
             <!-- Active Photo Zoomable -->
-            <lib-ngx-image-zoom [thumbImage]="activeImage | ProductImageUrl: product"
-                [fullImage]="activeImage | ProductImageUrl: product"></lib-ngx-image-zoom>
+            <lib-ngx-image-zoom #zoomimage [thumbImage]="activeImage | ProductImageUrl: product : 'md'"
+                [fullImage]="activeImage | ProductImageUrl: product : 'lg'"
+                (imagesLoaded)="onZoomImagesLoad($event)"></lib-ngx-image-zoom>
+            <anu-spinner [show]="zoomLoading"></anu-spinner>
         </div>
     </div>
 </div>
 
-<div class="col-sm-12 col-md-6 col-lg-5">
+<div class="col-sm-12 col-md-6 col-lg-5 relative">
     <h1 class="product-brand accent-deep-dark">{{product?.brand?.toUpperCase()}}</h1>
     <h1 class="product-title">{{product?.title}}</h1>
 
@@ -85,4 +89,6 @@
 
     <label class="accent-deep-dark"><strong>PRODUCT DETAILS</strong></label>
     <p class="text-left" [innerHTML]="product?.description"></p>
+
+    <anu-spinner [show]="loading"></anu-spinner>
 </div>
