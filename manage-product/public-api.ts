@@ -6,6 +6,7 @@ export * from './src/components/manage-product/manage-product.component';
 
 // Services
 export * from './src/services/manage-product.service';
+export * from './src/services/inventory.service';
 
 // Constants
 export * from './src/constants/manage-product.constant';

@@ -5,7 +5,6 @@ import {
   ProductImageResizeService
 } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
-import { MANAGE_PRODUCT_API_URLS_PROVIDER } from '../constants/manage-product.constant';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '@annuadvent/ngx-core/helpers-categories';
 import { ImageUpload } from '@annuadvent/ngx-common-ui/image-upload';
@@ -23,7 +22,7 @@ export class ManageProductService {
   private $categories = new BehaviorSubject<Array<Category>>([]);
 
   constructor(
-    @Inject(MANAGE_PRODUCT_API_URLS_PROVIDER) private apiUrls: any,
+    @Inject('API_URLS') private API_URLS: any,
     private http: HttpClient,
     private fireImageService: FireStorageImageService,
     private gcService: GlobalConfigService,
@@ -63,17 +62,17 @@ export class ManageProductService {
   }
 
   private async checkApiUrls(): Promise<void> {
-    if (!this.apiUrls) {
+    if (!this.API_URLS) {
       throw new Error(
-        `No apiUrls are provided. Provide MANAGE_PRODUCT_API_URLS_PROVIDER constant in the ManageProductModule's providers`
+        `No API_URLS are provided. Provide API_URLS in AppModule`
       );
     }
   }
 
   private async updateProduct(p: Product): Promise<void> {
     const url = this.isNewProduct
-      ? this.apiUrls.ADD
-      : `${this.apiUrls.UPDATE}/${p.id}`;
+      ? this.API_URLS.PRODUCT.ADD
+      : `${this.API_URLS.PRODUCT.UPDATE}/${p.id}`;
 
     try {
       await this.checkApiUrls();

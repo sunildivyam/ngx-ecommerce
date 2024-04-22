@@ -1,1 +1,19 @@
-<p>cart works!</p>
+<div class="col-sm-12 col-md-6 col-lg-8">
+    <ng-container *ngFor="let cartP of cart?.products">
+        <anu-card [isRowLayout]="true" class="shadow spacing-around-v"
+            [imageCssClasses]="['col-sm-3 col-md-2 col-lg-2']" [contentCssClasses]="['col-sm-9 col-md-10 col-lg-10']">
+            <anu-card-image class="spacing-half">
+                <anu-picture
+                    [src]="cartProducts[cartP.id]?.images[0] | ProductImageUrl: cartProducts[cartP.id]: 'sm'"></anu-picture>
+            </anu-card-image>
+            <anu-card-body class="spacing-half">
+                <anu-choose-product-detail class="sm" [product]="cartProducts[cartP.id]" [enableAddToBag]="false"
+                    [enableRemove]="true" [activeSize]="cartP.size" [activeQty]="cartP.qty"></anu-choose-product-detail>
+            </anu-card-body>
+        </anu-card>
+    </ng-container>
+
+</div>
+<div class="col-sm-12 col-md-6 col-lg-4">
+
+</div>

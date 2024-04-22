@@ -1,0 +1,166 @@
+@import 'mixins';
+
+:host {
+    &.sm {
+        .product {
+            &-brand {
+                font-size: 1rem;
+                line-height: 1;
+            }
+
+            &-title {
+                font-size: 0.9rem;
+                line-height: 1;
+            }
+
+            &-size {
+                font-size: 0.9rem;
+                margin-top: 1rem;
+
+                &-labels {
+                    &-size {
+                        font-size: 0.9rem;
+                    }
+
+                    &-price {
+                        display: none;
+                        font-size: 0.5rem;
+                    }
+                }
+
+                &-qtyalert {}
+
+                &-btn {
+                    margin-bottom: 1.2rem;
+                }
+            }
+
+            &-price {
+                margin-top: 1rem;
+                align-items: center;
+
+                &-selling {
+                    font-size: 1rem;
+                    margin-right: 0.3rem;
+                }
+
+                &-mrp {
+                    margin-right: 0.3rem;
+                }
+
+                &-discount {
+                    font-size: 1rem;
+                    margin-right: 0.3rem;
+                }
+            }
+
+            &-qty {
+                margin-top: 0rem;
+                font-size: 0.9rem;
+
+                &-list {
+                    font-size: 0.9rem;
+                    width: 6rem;
+                }
+            }
+
+            &-actions {
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                padding-top: 0.1rem;
+                padding-bottom: 0.1rem;
+
+                anu-smart-button {
+                    margin: 0.4rem;
+                    padding-top: 0.1rem;
+                    padding-bottom: 0.1rem;
+                }
+            }
+        }
+    }
+
+    .product {
+        &-brand {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        &-title {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        &-size {
+            margin-top: 2rem;
+
+            &-labels {
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            &-qtyalert {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            &-btn {
+                &.active {
+                    @include shadow()
+                }
+
+                &.out-of-stock {
+                    position: relative;
+                    @include disabled();
+
+                    &:after {
+                        content: "OUT OF STOCK";
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        font-size: 0.7rem;
+                        color: red;
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        &-price {
+            margin-top: 3rem;
+            align-items: center;
+
+            &-selling {
+                font-size: 1.4rem;
+                margin-right: 1rem;
+            }
+
+            &-mrp {
+                margin-right: 1rem;
+            }
+
+            &-discount {
+                font-size: 1.4rem;
+                margin-right: 1rem;
+            }
+        }
+
+        &-qty {
+            margin-top: 2rem;
+
+            &-list {
+                width: 6rem;
+            }
+        }
+
+        &-actions {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+}

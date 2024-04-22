@@ -24,7 +24,6 @@ export class ProductDetailComponent implements OnInit, OnChanges {
 
   activeSize: string = '';
   activeQty: number = 1;
-  allowedQty: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   activeImage: string = '';
   zoomLoading: boolean = false;
 
@@ -33,42 +32,24 @@ export class ProductDetailComponent implements OnInit, OnChanges {
     private wishlistService: WishlistService
   ) {}
 
-  private setAllowedQty() {
-    let maxQty = this.product?.qty[this.activeSize] || 1;
-    this.allowedQty = [];
-
-    maxQty = maxQty > 10 ? 10 : maxQty;
-
-    for (let i = 1; i <= maxQty; i++) {
-      this.allowedQty.push(i);
-    }
-  }
-
-  public setActiveSize(size: string = ''): void {
-    this.activeSize =
-      size || (this.product?.sizes && this.product?.sizes[0]) || '';
-
-    // Sets allowed Qty list
-    this.setAllowedQty();
-  }
-
   ngOnInit(): void {
-    this.setActiveSize();
     this.setActiveImage();
-    //
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    changes['product'] && this.setActiveSize();
     changes['product'] && this.setActiveImage();
   }
 
   public onQtyChange(value: number): void {
-    console.log(value);
+    this.activeQty = value;
+  }
+
+  public onSizeChange(value: string): void {
+    this.activeSize = value;
   }
 
   public onAddToBag(): void {
-    this.cartService.add(this.product?.id, this.activeSize, this.activeQty);
+    this.cartService.add(this.product, this.activeSize, this.activeQty);
   }
 
   public onWishlist(): void {

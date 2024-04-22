@@ -1,7 +1,5 @@
 import { Tab } from '@annuadvent/ngx-common-ui/tabs';
 
-export const MANAGE_PRODUCT_API_URLS_PROVIDER = 'apiUrls';
-
 export const flowTabs: Array<Tab> = [
   {
     name: 'basics',

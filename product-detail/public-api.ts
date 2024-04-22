@@ -3,6 +3,7 @@ export * from './src/product-detail.module';
 
 // Components
 export * from './src/components/product-detail/product-detail.component';
+export * from './src/components/choose-product-detail/choose-product-detail.component';
 
 // Services
 export * from './src/services/product-detail.service';

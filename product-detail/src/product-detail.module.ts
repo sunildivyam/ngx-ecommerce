@@ -9,9 +9,10 @@ import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
 import { FormsModule } from '@angular/forms';
 import { HelpersEcommerceModule } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { ChooseProductDetailComponent } from './components/choose-product-detail/choose-product-detail.component';
 
 @NgModule({
-  declarations: [ProductDetailComponent],
+  declarations: [ProductDetailComponent, ChooseProductDetailComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,6 +24,6 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
     SmartButtonModule,
     HelpersEcommerceModule
   ],
-  exports: [ProductDetailComponent]
+  exports: [ProductDetailComponent, ChooseProductDetailComponent]
 })
 export class ProductDetailModule {}
