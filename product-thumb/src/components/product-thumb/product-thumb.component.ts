@@ -42,6 +42,8 @@ export class ProductThumbComponent implements OnInit, OnChanges {
   @Input() href: string = '';
   @Input() actionLabel: string = 'Buy Now';
 
+  defaultSize: string = '';
+
   constructor(
     @Inject(DEFAULT_PRODUCT_IMAGE_PROVIDER) public defaultImageUrl: string
   ) {}
@@ -55,6 +57,7 @@ export class ProductThumbComponent implements OnInit, OnChanges {
   }
 
   private refreshSlideShow(): void {
+    this.defaultSize = this.value?.sizes[0] || '';
     setTimeout(() => this.slideshow.refresh());
   }
 }

@@ -7,6 +7,7 @@ import { CardModule } from '@annuadvent/ngx-common-ui/card';
 import { PictureModule } from '@annuadvent/ngx-common-ui/picture';
 import { HelpersEcommerceModule } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
+import { AddressModule } from '@annuadvent/ngx-ecommerce/address';
 
 @NgModule({
   declarations: [CartComponent],
@@ -17,7 +18,8 @@ import { SmartButtonModule } from '@annuadvent/ngx-common-ui/smart-button';
     CardModule,
     PictureModule,
     HelpersEcommerceModule,
-    SmartButtonModule
+    SmartButtonModule,
+    AddressModule
   ],
   exports: [CartComponent]
 })

@@ -7,5 +7,4 @@ export * from './src/components/address/address.component';
 export * from './src/components/address-list/address-list.component';
 
 // Services
-export * from './src/services/address-form.service';
-export * from '../../ngx-core/helpers-forms/src/async-validators/pincode-validator.service';
+export * from './src/services/address.service';

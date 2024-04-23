@@ -8,6 +8,7 @@ import {
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '@annuadvent/ngx-ecommerce/wishlist';
 import { DEFAULT_PRODUCT_IMAGE_PROVIDER } from '@annuadvent/ngx-ecommerce/product-thumb';
+import { AddressService } from '@annuadvent/ngx-ecommerce/address';
 
 @Component({
   selector: 'anu-cart',
@@ -29,6 +30,7 @@ export class CartComponent {
   constructor(
     public cartS: CartService,
     private wS: WishlistService,
+    public adS: AddressService,
     @Inject(DEFAULT_PRODUCT_IMAGE_PROVIDER) public defaultProductImage: string
   ) {
     this.cartS.cart.subscribe((cart) => (this.cart = cart));
@@ -71,12 +73,16 @@ export class CartComponent {
   }
 
   public onQtyChange(qty, cartP: InCartProduct): void {
-    cartP.qty = qty;
-    this.calculatePriceSummary();
+    setTimeout(() => {
+      cartP.qty = qty;
+      this.calculatePriceSummary();
+    });
   }
 
   public onSizeChange(size, cartP: InCartProduct): void {
-    cartP.size = size;
-    this.calculatePriceSummary();
+    setTimeout(() => {
+      cartP.size = size;
+      this.calculatePriceSummary();
+    });
   }
 }

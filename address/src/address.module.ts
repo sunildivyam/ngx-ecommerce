@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UtilsModule } from '@annuadvent/ngx-core/utils';
 import { AddressFormComponent } from './components/address-form/address-form.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AddressFormService } from './services/address-form.service';
 import { ReactiveFormModule } from '@annuadvent/ngx-common-ui/reactive-form';
 import { SpinnerModule } from '@annuadvent/ngx-common-ui/spinner';
 import { SingleSelectBoxModule } from '@annuadvent/ngx-common-ui/single-select-box';
@@ -16,7 +15,7 @@ import { PincodeValidatorService } from '@annuadvent/ngx-core/helpers-forms';
 
 @NgModule({
   declarations: [AddressFormComponent, AddressComponent, AddressListComponent],
-  providers: [AddressFormService, PincodeValidatorService],
+  providers: [PincodeValidatorService],
   imports: [
     CommonModule,
     HttpClientModule,
