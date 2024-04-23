@@ -6,6 +6,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
 import { CartService } from '@annuadvent/ngx-ecommerce/cart';
 import { WishlistService } from '@annuadvent/ngx-ecommerce/wishlist';
@@ -29,7 +30,8 @@ export class ProductDetailComponent implements OnInit, OnChanges {
 
   constructor(
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +52,7 @@ export class ProductDetailComponent implements OnInit, OnChanges {
 
   public onAddToBag(): void {
     this.cartService.add(this.product, this.activeSize, this.activeQty);
+    this.router.navigateByUrl('/my/bag');
   }
 
   public onWishlist(): void {

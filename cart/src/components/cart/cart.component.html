@@ -1,19 +1,70 @@
 <div class="col-sm-12 col-md-6 col-lg-8">
     <ng-container *ngFor="let cartP of cart?.products">
-        <anu-card [isRowLayout]="true" class="shadow spacing-around-v"
+        <anu-card [isRowLayout]="true" class="border spacing-around-v"
             [imageCssClasses]="['col-sm-3 col-md-2 col-lg-2']" [contentCssClasses]="['col-sm-9 col-md-10 col-lg-10']">
             <anu-card-image class="spacing-half">
-                <anu-picture
-                    [src]="cartProducts[cartP.id]?.images[0] | ProductImageUrl: cartProducts[cartP.id]: 'sm'"></anu-picture>
+                <a [href]="href+'/'+cartP.id">
+                    <anu-picture [defaultSrc]="defaultProductImage"
+                        [src]="cartProducts[cartP.id]?.images[0] | ProductImageUrl: cartProducts[cartP.id]: 'sm'"></anu-picture>
+                </a>
             </anu-card-image>
             <anu-card-body class="spacing-half">
-                <anu-choose-product-detail class="sm" [product]="cartProducts[cartP.id]" [enableAddToBag]="false"
-                    [enableRemove]="true" [activeSize]="cartP.size" [activeQty]="cartP.qty"></anu-choose-product-detail>
+                <anu-choose-product-detail class="sm" [href]="href" [product]="cartProducts[cartP.id]"
+                    [enableAddToBag]="false" [enableRemove]="true" [activeSize]="cartP.size" [activeQty]="cartP.qty"
+                    (removeClicked)="onRemoveItem(cartProducts[cartP.id], cartP.size)"
+                    (wishlistClicked)="onWishlistItem(cartProducts[cartP.id], cartP.size)"
+                    (qtyChanged)="onQtyChange($event, cartP)"
+                    (sizeChanged)="onSizeChange($event, cartP)"></anu-choose-product-detail>
             </anu-card-body>
         </anu-card>
     </ng-container>
 
 </div>
 <div class="col-sm-12 col-md-6 col-lg-4">
-
+    <div class="row nowrap spacing-v border-bottom"><strong>PRICE SUMMARY ({{cart?.products?.length || 0}}
+            Items)</strong></div>
+    <div class="row nowrap spacing-v">
+        <div class="col-8">
+            Total MRP
+        </div>
+        <div class="col-4">
+            Rs. {{totalMrp}}
+        </div>
+    </div>
+    <div class="row nowrap spacing-v">
+        <div class="col-8">
+            Total Discount
+        </div>
+        <div class="col-4">
+            Rs. {{totalDiscount}}
+        </div>
+    </div>
+    <div class="row nowrap spacing-v">
+        <div class="col-8">
+            Convinince Fee
+        </div>
+        <div class="col-4">
+            Rs. {{convinienceFee}}
+        </div>
+    </div>
+    <div class="row nowrap spacing-v">
+        <div class="col-8">
+            Shipping Fee
+        </div>
+        <div class="col-4">
+            Rs. {{shippingFee}}
+        </div>
+    </div>
+    <div class="row nowrap spacing-v border-top border-bottom">
+        <div class="col-8">
+            <strong>TOTAL</strong>
+        </div>
+        <div class="col-4">
+            <strong> Rs. {{totalToPay}}</strong>
+        </div>
+    </div>
+    <div class="row nowrap spacing-v">
+        <anu-smart-button class="col-12 spacing primary-deep-dark-grad accent-deep-light" label="PLACE ORDER"
+            (btnClick)="onPlaceOrder()"></anu-smart-button>
+    </div>
 </div>

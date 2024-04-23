@@ -15,6 +15,7 @@ import { Product } from '@annuadvent/ngx-core/helpers-ecommerce';
 export class ChooseProductDetailComponent {
   @Input() product: Product = null;
   @Input() activeSize: string = '';
+  @Input() href: string = '';
   @Input() activeQty: number = 1;
   @Input() enableAddToBag: boolean = true;
   @Input() enableRemove: boolean = false;

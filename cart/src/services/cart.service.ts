@@ -80,7 +80,7 @@ export class CartService {
   }
 
   private async updateOrAddCartInDb(cart: Cart): Promise<void> {
-    const url = `${this.API_URLS.CART.UPDATE}/${cart.id}`;
+    const url = `${this.API_URLS.CART.ADD}`;
 
     try {
       const result = await lastValueFrom(await this.http.post(url, cart));
@@ -91,7 +91,7 @@ export class CartService {
   }
 
   private async deleteCartInDb(cart: Cart): Promise<void> {
-    const url = `${this.API_URLS.CART.DELETE}/${cart.id}`;
+    const url = `${this.API_URLS.CART.DELETE}`;
 
     try {
       const result = await lastValueFrom(await this.http.post(url, cart));
@@ -102,9 +102,7 @@ export class CartService {
   }
 
   private async getCartFromDb(): Promise<Cart> {
-    const url = `${
-      this.API_URLS.CART.BY_ID
-    }/${this.authService.getCurrentUserId()}`;
+    const url = `${this.API_URLS.CART.GET}`;
 
     try {
       const cartR = await lastValueFrom(await this.http.get(url));
@@ -156,7 +154,7 @@ export class CartService {
     let cart = this.$cart.value;
     //  remove cart Product
     cart.products = cart.products.filter(
-      (p) => p.id !== product.id && p.size !== size
+      (p) => !(p.id === product.id && p.size === size)
     );
 
     this.updateCart(cart);
