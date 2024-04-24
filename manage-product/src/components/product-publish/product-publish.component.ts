@@ -9,8 +9,6 @@ import { ManageProductService } from '../../services/manage-product.service';
 export class ProductPublishComponent {
   constructor(public mpS: ManageProductService) {}
   public onPublish(event: any) {
-    event.stopPropagation();
-
     this.mpS.goLive();
   }
 }

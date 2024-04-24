@@ -1,0 +1,10 @@
+<div class="row">
+    <anu-picture class="col-sm-3 col-md-2 col-lg-1 center middle" *ngFor="let img of images" [src]="img | AppImageUrl">
+        <anu-smart-button class="spacing-h" label="Delete" (btnClick)="onDelete($event, img)"></anu-smart-button>
+    </anu-picture>
+</div>
+
+<anu-dynamic-form [params]="imagesParams" [value]="formImages" [loading]="aiS.loading | async" [enableCancelBtn]="false"
+    (submitClicked)="onSave($event)"></anu-dynamic-form>
+
+<anu-error *ngIf="error" [code]="error?.code" [message]="error?.message"></anu-error>

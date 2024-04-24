@@ -1,48 +1,48 @@
 import { Component } from '@angular/core';
-import { ManageProductService } from '../../services/manage-product.service';
+import { AppImagesService } from '../../services/app-images.service';
 import {
   GlobalConfigParamsEnum,
   GlobalConfigService
 } from '@annuadvent/ngx-core/global-config';
 import { imagesParams } from '../../constants/images-params.constant';
-import { ImageUpload } from '@annuadvent/ngx-common-ui/image-upload';
 import { AppError } from '@annuadvent/ngx-core/app-error';
+import { ImageUpload } from '@annuadvent/ngx-common-ui/image-upload';
 
 @Component({
-  selector: 'anu-product-images',
-  templateUrl: './product-images.component.html',
-  styleUrls: ['./product-images.component.scss']
+  selector: 'anu-app-images',
+  templateUrl: './app-images.component.html',
+  styleUrls: ['./app-images.component.scss']
 })
-export class ProductImagesComponent {
+export class AppImagesComponent {
   images: Array<string> = [];
   imagesParams = { ...imagesParams };
   error: AppError = null;
-  maxCount = 0;
-
+  formImages: {
+    bannerImages: [];
+    otherImages: [];
+  };
   constructor(
-    public mpS: ManageProductService,
+    public aiS: AppImagesService,
     private gcService: GlobalConfigService
   ) {
-    this.gcService.config.subscribe(() => {
-      this.maxCount = this.gcService.getValue(
-        GlobalConfigParamsEnum.maxProductImageCount
-      );
+    this.aiS.getImages();
 
+    this.gcService.config.subscribe(() => {
       const { width, height } = this.gcService.getValue(
-        GlobalConfigParamsEnum.productImageDimensions
+        GlobalConfigParamsEnum.bannerImageDimensions
       );
 
       this.imagesParams = {
         ...imagesParams,
-        productImages: {
-          ...imagesParams.productImages,
+        bannerImages: {
+          ...imagesParams.bannerImages,
           helpText: `(${width}px X ${height}px) and jpeg format is prefered.`
         }
       };
     });
 
-    this.mpS.product.subscribe((p) => {
-      this.images = [...(p?.images || [])];
+    this.aiS.images.subscribe((p) => {
+      this.images = p;
     });
   }
 
@@ -60,24 +60,29 @@ export class ProductImagesComponent {
 
   public onSave(value: any): void {
     this.error = null;
-    const imageUploads: Array<ImageUpload> = value.productImages;
+    const imageUploads: Array<ImageUpload> = [
+      ...(value.bannerImages || []),
+      ...(value.otherImages || [])
+    ];
     const duplicates = this.hasDuplicates(imageUploads);
-    const totalImagesCount = this.images.length + imageUploads.length;
 
     if (duplicates.length) {
       this.error = new AppError(
         `Duplicate images - ${duplicates.join('</br>')}`
       );
-    } else if (totalImagesCount > this.maxCount) {
-      this.error = new AppError(
-        `Exceeds max limit of product images. Allowed ${this.maxCount} images, while You would end up iploading ${totalImagesCount} images`
-      );
     } else {
-      this.mpS.saveImages(imageUploads);
+      this.aiS.uploadImages(imageUploads).then((msg) => {
+        if (!msg) {
+          value.bannerImages = null;
+          value.otherImages = null;
+        } else {
+          this.error = new AppError({ message: msg });
+        }
+      });
     }
   }
 
   public onDelete(event: any, img: string) {
-    this.mpS.deleteProductImage(img);
+    this.aiS.deleteImage(img);
   }
 }
