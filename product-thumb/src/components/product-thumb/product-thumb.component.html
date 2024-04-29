@@ -13,14 +13,14 @@
 
   <!-- Price -->
   <div class="row">
-    <div class="product-price row" *ngIf="value?.offer[defaultSize] > 0">
+    <div class="product-price row" *ngIf="value?.offer && value?.offer[defaultSize] > 0">
       <strong class="spacing-around-h-half product-price-selling accent-deep-dark">Rs. {{value?.price[defaultSize] |
         sellingprice:
         value?.offer[defaultSize]}}</strong>
       <span class="spacing-around-h-half product-price-mrp text-strike">MRP Rs. {{value?.price[defaultSize]}}</span>
       <strong class="spacing-around-h-half product-price-discount warning">({{value?.offer[defaultSize]}}% OFF)</strong>
     </div>
-    <div class="product-price" *ngIf="value?.offer[defaultSize] <= 0">
+    <div class="product-price" *ngIf="value?.offer && value?.offer[defaultSize] <= 0">
       <strong class="product-price-selling accent-deep-dark">Rs. {{value?.price[defaultSize] | sellingprice:
         value?.offer[defaultSize]}}</strong>
     </div>
