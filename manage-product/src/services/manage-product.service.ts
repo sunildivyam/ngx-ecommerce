@@ -71,8 +71,8 @@ export class ManageProductService {
 
   private async updateProduct(p: Product): Promise<void> {
     const url = this.isNewProduct
-      ? this.API_URLS.PRODUCT.ADD
-      : `${this.API_URLS.PRODUCT.UPDATE}/${p.id}`;
+      ? this.API_URLS.PRODUCTS.ADD
+      : `${this.API_URLS.PRODUCTS.UPDATE}/${p.id}`;
 
     try {
       await this.checkApiUrls();

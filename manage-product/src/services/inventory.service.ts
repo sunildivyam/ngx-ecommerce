@@ -26,7 +26,7 @@ export class InventoryService {
 
     try {
       const productR: any = await lastValueFrom(
-        this.http.get(`${this.API_URLS.PRODUCT.ALL}`)
+        this.http.get(`${this.API_URLS.PRODUCTS.ALL}`)
       );
 
       const products = productR.map((p) => new Product(p));
