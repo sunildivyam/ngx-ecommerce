@@ -51,6 +51,18 @@ import { ProductThumbModule } from '@annuadvent/ngx-ecommerce/product-thumb';
     HelpersEcommerceModule,
     ProductThumbModule
   ],
-  exports: [ManageProductComponent]
+  exports: [
+    ManageProductComponent,
+    ProductBasicsComponent,
+    ProductCategoriesComponent,
+    ProductSizesComponent,
+    ProductPricesComponent,
+    ProductImagesComponent,
+    ProductQuantitiesComponent,
+    ProductOffersComponent,
+    ProductPublishComponent,
+    ProductDispatchComponent,
+    LevelCategoriesOfPipe
+  ]
 })
 export class ManageProductModule {}
